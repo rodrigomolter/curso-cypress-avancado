@@ -65,14 +65,6 @@ describe('Hacker Stories', () => {
       it('orders by points', () => {})
     })
 
-    // Hrm, how would I simulate such errors?
-    // Since I still don't know, the tests are being skipped.
-    // TODO: Find a way to test them out.
-    context.skip('Errors', () => {
-      it('shows "Something went wrong ..." in case of a server error', () => {})
-
-      it('shows "Something went wrong ..." in case of a network error', () => {})
-    })
   })
 
   context('Search', () => {
@@ -159,11 +151,42 @@ describe('Hacker Stories', () => {
             .type(`${faker.random.word()}{enter}`)
         })
 
-        cy.wait('@getRandomStoriesgit')
+        cy.wait('@getRandomStories')
 
         cy.get('.last-searches button')
           .should('have.length', 5)
       })
     })
+  })
+})
+
+
+context('Errors', () => {
+  it('shows "Something went wrong ..." in case of a server error', () => {
+    cy.intercept(
+      'GET',
+      '**/search**',
+      { statusCode: 500 }
+    ).as('getServerFailure')
+
+    cy.visit('/')
+    cy.wait('@getServerFailure')
+
+    cy.get('p:contains(Something went wrong ...)')
+      .should('be.visible')
+  })
+
+  it.only('shows "Something went wrong ..." in case of a network error', () => {
+    cy.intercept(
+      'GET',
+      '**/search**',
+      { forceNetworkError: true }
+    ).as('getNetworkError')
+
+    cy.visit('/')
+    cy.wait('@getNetworkError')
+
+    cy.get('p:contains(Something went wrong ...)')
+      .should('be.visible')
   })
 })
