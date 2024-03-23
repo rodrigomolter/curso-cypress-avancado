@@ -1,0 +1,152 @@
+{
+    "hits": [
+        {
+            "title": "Node v4.0.0",
+            "author": "mmebane",
+            "num_comments": 267,
+            "points": 1248,
+            "objectID": "10187596",
+            "url": "https://nodejs.org/en/blog/release/v4.0.0/"
+        },
+        {
+            "title": "Show HN: I'm 12, learning JS, and wrote Wolfram's cellular automaton in Node",
+            "author": "liamilan",
+            "num_comments": 283,
+            "points": 1072,
+            "objectID": "17871313",
+            "url": "https://bitbucket.org/liamilan/wolfram-cellular-automata"
+        },
+        {
+            "author": "tptacek",
+            "num_comments": 229,
+            "objectID": "10882563",
+            "points": 1030,
+            "title": "TrendMicro Node.js HTTP server listening on localhost can execute commands",
+            "url": "https://code.google.com/p/google-security-research/issues/detail?id=693"
+        },
+        {
+            "author": "dazhbog",
+            "num_comments": 491,
+            "objectID": "17247135",
+            "points": 994,
+            "title": "Things I Regret About Node.js [video]",
+            "url": "https://www.youtube.com/watch?v=M3BM9TB-8yA"
+        },
+        {
+
+            "author": "mokkol",
+            "num_comments": 639,
+            "objectID": "29577897",
+            "points": 941,
+            "title": "From Node to Ruby on Rails",
+            "url": "https://nikodunk.com/a-node-js-developer-discovers-rails/"
+        },
+        {
+            "author": "h0ek",
+            "num_comments": 554,
+            "objectID": "36837273",
+            "points": 816,
+            "title": "Man found guilty of child porn because he ran a Tor exit node",
+            "url": "https://lowendbox.com/blog/man-found-guilty-of-child-porn-because-he-ran-a-tor-exit-node-the-story-of-william-weber/"
+        },
+        {
+
+            "author": "stoey",
+            "num_comments": 240,
+            "objectID": "8631022",
+            "points": 778,
+            "title": "Node.js in Flame Graphs",
+            "url": "http://techblog.netflix.com/2014/11/nodejs-in-flames.html"
+        },
+        {
+            "num_comments": 173,
+            "objectID": "19399576",
+            "points": 763,
+            "title": "Germany to make it a crime to run a Tor node or website",
+            "url": "https://translate.google.com/translate?hl=&sl=de&tl=en&u=https%3A%2F%2Fwww.zeit.de%2Fdigital%2Fdatenschutz%2F2019-03%2Ftor-netzwerk-darknet-gesetzentwurf-strafverfolgung-internet-kriminalitaet-anonymitaet%2Fkomplettansicht&sandbox=1"
+        },
+        {
+            "author": "uvic",
+            "num_comments": 160,
+            "objectID": "23454557",
+            "points": 762,
+            "title": "NoDesign.dev \u2013 Tools and resources for non-artistic developers",
+            "url": "https://nodesign.dev/"
+        },
+        {
+
+            "author": "JoshGlazebrook",
+            "num_comments": 159,
+            "objectID": "11574705",
+            "points": 728,
+            "title": "Node.js v6.0 Released",
+            "url": "https://nodejs.org/en/blog/announcements/v6-release/?release"
+        },
+        {
+
+            "author": "yamafaktory",
+            "num_comments": 206,
+            "objectID": "30161626",
+            "points": 679,
+            "title": "Fetch API has landed into Node.js",
+            "url": "https://github.com/nodejs/node/commit/6ec225392675c92b102d3caad02ee3a157c9d1b7"
+        },
+        {
+
+            "author": "behnamoh",
+            "num_comments": 552,
+            "objectID": "12338365",
+            "points": 624,
+            "title": "\u201cNode.js is one of the worst things to happen to the software industry\u201d (2012)",
+            "url": "http://harmful.cat-v.org/software/node.js"
+        },
+        {
+            "author": "LinguaBrowse",
+            "num_comments": 271,
+            "objectID": "26361423",
+            "points": 624,
+            "title": "Show HN: Svelte NodeGUI, a lightweight Electron alternative with native UI",
+            "url": "https://github.com/nodegui/svelte-nodegui"
+        },
+        {
+            "author": "Unknow :(",
+            "num_comments": 97,
+            "objectID": "2392051",
+            "points": 581,
+            "title": "At work? Try this Hacker News homepage inspired by Node [SFW]",
+            "url": "http://nowjs.com/codehn"
+        },
+        {
+            "author": "petercooper",
+            "num_comments": 177,
+            "objectID": "14447682",
+            "points": 531,
+            "title": "Node v8.0.0 Released",
+            "url": "https://nodejs.org/en/blog/release/v8.0.0/"
+        },
+        {
+            "author": "manigandham",
+            "num_comments": 215,
+            "objectID": "23272992",
+            "points": 482,
+            "title": "Multi-node TimescaleDB is now free",
+            "url": "https://blog.timescale.com/blog/multi-node-petabyte-scale-time-series-database-postgresql-free-tsdb/"
+        },
+        {
+            "author": "btmills",
+            "num_comments": 75,
+            "objectID": "6784967",
+            "points": 466,
+            "title": "Walmart Node.js Memory Leak",
+            "url": "http://www.joyent.com/blog/walmart-node-js-memory-leak"
+        },
+        {
+            "author": "railsonakita",
+            "num_comments": 155,
+            "objectID": "6784998",
+            "points": 466,
+            "title": "Node.js Fundamentals for Everyone",
+            "url": "http://www.akitando.com/blog/nodejs"
+        }
+    ]
+}

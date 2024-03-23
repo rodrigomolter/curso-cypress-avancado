@@ -1,0 +1,124 @@
+{
+    "hits": [
+        {
+            "author": "dwwoelfel",
+            "num_comments": 498,
+            "objectID": "15316175",
+            "points": 2280,
+            "title": "Relicensing React, Jest, Flow, and Immutable.js",
+            "url": "https://code.facebook.com/posts/300798627056246"
+        },
+        {
+            "author": "pomber",
+            "num_comments": 108,
+            "objectID": "21536789",
+            "points": 1478,
+            "title": "Build Your Own React",
+            "url": "https://pomb.us/build-your-own-react/"
+        },
+        {
+            "author": "peterhunt",       
+            "num_comments": 287,
+            "objectID": "9271246",
+            "points": 1039,
+            "title": "React Native is now open source",
+            "url": "https://github.com/facebook/react-native"
+        },
+        {
+            "author": "y4m4b4",
+            "num_comments": 595,
+            "objectID": "15050841",
+            "points": 978,
+            "title": "Explaining React's license",
+            "url": "https://code.facebook.com/posts/112130496157735/explaining-react-s-license/"
+        },
+        {
+            "author": "markthethomas",
+            "num_comments": 338,
+            "objectID": "15339983",
+            "points": 914,
+            "title": "React 16",
+            "url": "https://facebook.github.io/react/blog/2017/09/26/react-v16.0.html"
+        },
+        {
+            "author": "apetresc",
+            "num_comments": 406,
+            "objectID": "14142120",
+            "points": 851,
+            "title": "Facebook Announces React Fiber, a Rewrite of Its React Framework",
+            "url": "https://techcrunch.com/2017/04/18/facebook-announces-react-fiber-a-rewrite-of-its-react-framework/"
+        },
+        {
+            "author": "papa-whisky",
+            "num_comments": 742,
+            "objectID": "32282632",
+            "points": 829,
+            "title": "US regulators will certify first small nuclear reactor design",
+            "url": "https://arstechnica.com/science/2022/07/us-regulators-will-certify-first-small-nuclear-reactor-design/"
+        },
+        {
+            "author": "julosflb",
+            "num_comments": 637,
+            "objectID": "29167000",
+            "points": 784,
+            "title": "Macron says France will build new nuclear energy reactors",
+            "url": "https://www.reuters.com/business/energy/macron-says-france-will-build-more-nuclear-energy-reactors-2021-11-09/"
+        },
+        {
+            "author": "vjeux",
+            "num_comments": 241,
+            "objectID": "12144371",
+            "points": 777,
+            "title": "Create React Apps with No Configuration",
+            "url": "https://facebook.github.io/react/blog/2016/07/22/create-apps-with-no-configuration.html"
+        },
+        {
+            "author": "clessg",
+            "num_comments": 468,
+            "objectID": "35186812",
+            "points": 748,
+            "title": "Introducing react.dev",
+            "url": "https://react.dev/blog/2023/03/16/introducing-react-dev"
+        },
+        {
+            "author": "WillAbides",
+            "num_comments": 227,
+            "objectID": "11262736",
+            "points": 736,
+            "title": "Add Reactions to Pull Requests, Issues, and Comments",
+            "url": "https://github.com/blog/2119-add-reactions-to-pull-requests-issues-and-comments"
+        },
+        {
+            "author": "fanf2",
+            "num_comments": 471,
+            "objectID": "15052691",
+            "points": 732,
+            "title": "Vue.js vs. React",
+            "url": "https://vuejs.org/v2/guide/comparison.html#React"
+        },
+        {
+            "author": "ed",
+            "num_comments": 477,
+            "objectID": "23160075",
+            "points": 715,
+            "title": "React Native for Windows and Mac",
+            "url": "https://microsoft.github.io/react-native-windows/"
+        },
+        {
+            "author": "yreg",
+            "num_comments": 769,
+            "objectID": "32755893",
+            "points": 705,
+            "title": "Korean nuclear fusion reactor achieves 100M\u00b0C for 30 seconds",
+            "url": "https://www.shiningscience.com/2022/09/korean-nuclear-fusion-reactor-achieves.html"
+        },
+        {
+            "author": "natcombs",
+            "num_comments": 541,
+            "objectID": "24358850",
+            "points": 703,
+            "title": "Small nuclear reactors: tiny NuScale reactor gets safety approval",
+            "url": "https://www.popularmechanics.com/science/a33896110/tiny-nuclear-reactor-government-approval/"
+        }
+    ]
+}

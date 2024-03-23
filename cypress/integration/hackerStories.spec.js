@@ -1,96 +1,224 @@
-describe('Hacker Stories', () => {
+const initialTerm = 'React'
+const newTerm = 'Node'
+describe('E2E', () => {
   beforeEach(() => {
-    cy.visit('/')
     cy.intercept({
       method: 'GET',
       pathname: '**/search',
       query: {
-        query: 'React',
+        query: initialTerm,
         page: '0'
       }
     }).as('getStories')
+    cy.visit('/')
+    cy.wait('@getStories')
   })
 
-  it('shows the footer', () => {
-    cy.get('footer')
+  it('shows 20 stories, then the next 20 after clicking "More"', () => {
+    cy.intercept({
+      method: 'GET',
+      pathname: '**/search',
+      query: {
+        query: initialTerm,
+        page: '1'
+      }
+    }).as('getNextStories')
+
+    cy.get('.item').should('have.length', 20)
+    cy.contains('More').click()
+
+    cy.wait('@getNextStories')
+    cy.get('.item').should('have.length', 40)
+  })
+
+  it('searches via the last searched term', () => {
+    cy.get('#search').clear()
+
+    cy.intercept(
+      'GET',
+        `**/search?query=${newTerm}&page=0`
+    ).as('getNewTermStories')
+
+    cy.get('#search').type(`${newTerm}{enter}`)
+
+    cy.wait('@getNewTermStories')
+
+    cy.get(`button:contains(${initialTerm})`)
       .should('be.visible')
-      .and('contain', 'Icons made by Freepik from www.flaticon.com')
+      .click()
+
+    cy.wait('@getStories')
+
+    cy.get('.item').should('have.length', 20)
+    cy.get('.item')
+      .first()
+      .should('contain', initialTerm)
+    cy.get(`button:contains(${newTerm})`)
+      .should('be.visible')
+  })
+})
+
+describe('API Mocking', () => {
+  beforeEach(() => {
+    cy.intercept(
+      'GET',
+      `**/search?query=${initialTerm}&page=0`,
+      { fixture: 'smallMockedAnswer' }
+    ).as('getMockedAnswer')
+
+    cy.visit('/')
+    cy.wait('@getMockedAnswer')
   })
 
-  context('List of stories', () => {
-    // Since the API is external,
-    // I can't control what it will provide to the frontend,
-    // and so, how can I assert on the data?
-    // This is why this test is being skipped.
-    // TODO: Find a way to test it out.
-    it.skip('shows the right data for all rendered stories', () => {})
-
-    it('shows 20 stories, then the next 20 after clicking "More"', () => {
-      cy.intercept({
-        method: 'GET',
-        pathname: '**/search',
-        query: {
-          query: 'React',
-          page: '1'
-        }
-      }).as('getNextStories')
-
-      cy.get('.item').should('have.length', 20)
-      cy.contains('More').click()
-
-      cy.wait('@getNextStories')
-      cy.get('.item').should('have.length', 40)
+  context('Shows the list of Stories', () => {
+    it('shows the footer', () => {
+      cy.get('footer')
+        .should('be.visible')
+        .and('contain', 'Icons made by Freepik from www.flaticon.com')
     })
 
-    it('shows only nineteen stories after dimissing the first story', () => {
+    it('shows the right data for all rendered stories', () => {
+      const smallMockedAnswer = require('../fixtures/smallMockedAnswer')
+
+      cy.get('.item')
+        .first()
+        .should('be.visible')
+        .and('contain', smallMockedAnswer.hits[0].title)
+        .and('contain', smallMockedAnswer.hits[0].author)
+        .and('contain', smallMockedAnswer.hits[0].num_comments)
+        .and('contain', smallMockedAnswer.hits[0].points)
+      cy.get(`.item a:contains(${smallMockedAnswer.hits[0].title})`)
+        .should('have.attr', 'href', smallMockedAnswer.hits[0].url)
+
+      cy.get('.item')
+        .last()
+        .should('be.visible')
+        .and('contain', smallMockedAnswer.hits[1].title)
+        .and('contain', smallMockedAnswer.hits[1].author)
+        .and('contain', smallMockedAnswer.hits[1].num_comments)
+        .and('contain', smallMockedAnswer.hits[1].points)
+      cy.get(`.item a:contains(${smallMockedAnswer.hits[1].title})`)
+        .should('have.attr', 'href', smallMockedAnswer.hits[1].url)
+    })
+
+    it('shows one story less after dimissing the first story', () => {
       cy.get('.button-small')
         .first()
         .click()
 
-      cy.get('.item').should('have.length', 19)
+      cy.get('.item').should('have.length', 1)
+    })
+  })
+
+  context('Order by', () => {
+    const smallMockedAnswer = require('../fixtures/smallMockedAnswer')
+    it('orders by title', () => {
+      cy.get('.list-header-button:contains(Title)')
+        .as('titleHeader')
+        .should('be.visible')
+        .click()
+
+      cy.get('.item')
+        .first()
+        .should('be.visible')
+        .and('contain', smallMockedAnswer.hits[0].title)
+      cy.get(`.item a:contains(${smallMockedAnswer.hits[0].title})`)
+        .should('have.attr', 'href', smallMockedAnswer.hits[0].url)
+
+      cy.get('@titleHeader')
+        .click()
+
+      cy.get('.item')
+        .first()
+        .should('be.visible')
+        .and('contain', smallMockedAnswer.hits[1].title)
+      cy.get(`.item a:contains(${smallMockedAnswer.hits[1].title})`)
+        .should('have.attr', 'href', smallMockedAnswer.hits[1].url)
     })
 
-    // Since the API is external,
-    // I can't control what it will provide to the frontend,
-    // and so, how can I test ordering?
-    // This is why these tests are being skipped.
-    // TODO: Find a way to test them out.
-    context.skip('Order by', () => {
-      it('orders by title', () => {})
+    it('orders by author', () => {
+      cy.get('.list-header-button:contains(Author)')
+        .as('authorHeader')
+        .should('be.visible')
+        .click()
 
-      it('orders by author', () => {})
+      cy.get('.item')
+        .first()
+        .should('be.visible')
+        .and('contain', smallMockedAnswer.hits[0].author)
 
-      it('orders by comments', () => {})
+      cy.get('@authorHeader')
+        .click()
 
-      it('orders by points', () => {})
+      cy.get('.item')
+        .first()
+        .should('be.visible')
+        .and('contain', smallMockedAnswer.hits[1].author)
     })
 
+    it('orders by comments', () => {
+      cy.get('.list-header-button:contains(Comments)')
+        .as('commentsHeader')
+        .should('be.visible')
+        .click()
+
+      cy.get('.item')
+        .first()
+        .should('be.visible')
+        .and('contain', smallMockedAnswer.hits[1].num_comments)
+
+      cy.get('@commentsHeader')
+        .click()
+
+      cy.get('.item')
+        .first()
+        .should('be.visible')
+        .and('contain', smallMockedAnswer.hits[0].num_comments)
+    })
+
+    it('orders by points', () => {
+      cy.get('.list-header-button:contains(Points)')
+        .as('pointsHeader')
+        .should('be.visible')
+        .click()
+
+      cy.get('.item')
+        .first()
+        .should('be.visible')
+        .and('contain', smallMockedAnswer.hits[1].points)
+
+      cy.get('@pointsHeader')
+        .click()
+
+      cy.get('.item')
+        .first()
+        .should('be.visible')
+        .and('contain', smallMockedAnswer.hits[0].points)
+    })
   })
 
   context('Search', () => {
-    const initialTerm = 'React'
-    const newTerm = 'Cypress'
-
     beforeEach(() => {
-      cy.get('#search')
-        .clear()
-
       cy.intercept(
         'GET',
-        `**/search?query=${newTerm}&page=0`
-      ).as('getNewTermStories')
-    })
+        `**/search?query=${newTerm}&page=0`,
+        { fixture: 'mockedNewTerm.json' }
+      ).as('getNewTermMockedAnswer')
 
+      cy.visit('/')
+      cy.wait('@getMockedAnswer')
+
+      cy.get('#search').clear()
+    })
     it('types and hits ENTER', () => {
       cy.get('#search')
         .type(`${newTerm}{enter}`)
 
-      cy.wait('@getNewTermStories')
+      cy.wait('@getNewTermMockedAnswer')
 
       cy.get('.item').should('have.length', 20)
       cy.get('.item')
-        .first()
-        .should('contain', newTerm)
+        .contains(newTerm)
       cy.get(`button:contains(${initialTerm})`)
         .should('be.visible')
     })
@@ -101,67 +229,49 @@ describe('Hacker Stories', () => {
       cy.contains('Submit')
         .click()
 
-      cy.wait('@getNewTermStories')
+      cy.wait('@getNewTermMockedAnswer')
 
       cy.get('.item').should('have.length', 20)
       cy.get('.item')
-        .first()
-        .should('contain', newTerm)
+        .contains(newTerm)
       cy.get(`button:contains(${initialTerm})`)
         .should('be.visible')
     })
 
-    context('Last searches', () => {
-      it('searches via the last searched term', () => {
-        cy.intercept(
-          'GET',
-          `**/search?query=${initialTerm}&page=0`
-        ).as('getInitialTermStories')
+    it('shows a max of 5 buttons for the last searched terms', () => {
+      const faker = require('faker')
 
+      cy.intercept(
+        'GET',
+        '**/search**',
+        { fixture: 'mockedInitialTerm' }
+      ).as('getRandomStories')
+
+      Cypress._.times(6, () => {
         cy.get('#search')
-          .type(`${newTerm}{enter}`)
-
-        cy.wait('@getNewTermStories')
-
-        cy.get(`button:contains(${initialTerm})`)
-          .should('be.visible')
-          .click()
-
-        cy.wait('@getInitialTermStories')
-
-        cy.get('.item').should('have.length', 20)
-        cy.get('.item')
-          .first()
-          .should('contain', initialTerm)
-        cy.get(`button:contains(${newTerm})`)
-          .should('be.visible')
+          .clear()
+          .type(`${faker.random.word()}{enter}`)
       })
 
-      it('shows a max of 5 buttons for the last searched terms', () => {
-        const faker = require('faker')
+      cy.wait('@getRandomStories')
 
-        cy.intercept(
-          'GET',
-          '**/search**'
-        ).as('getRandomStories')
+      cy.get('.last-searches button')
+        .should('have.length', 5)
+    })
 
-        Cypress._.times(6, () => {
-          cy.get('#search')
-            .clear()
-            .type(`${faker.random.word()}{enter}`)
-        })
-
-        cy.wait('@getRandomStories')
-
-        cy.get('.last-searches button')
-          .should('have.length', 5)
-      })
+    it('shows no story when none is returned', () => {
+      cy.intercept(
+        'GET',
+        '**/search**',
+        { fixture: 'empty' }
+      ).as('getRandomStories')
+      cy.visit('/')
+      cy.get('.item').should('not.exist')
     })
   })
 })
 
-
-context('Errors', () => {
+describe('Errors', () => {
   it('shows "Something went wrong ..." in case of a server error', () => {
     cy.intercept(
       'GET',
@@ -176,7 +286,7 @@ context('Errors', () => {
       .should('be.visible')
   })
 
-  it.only('shows "Something went wrong ..." in case of a network error', () => {
+  it('shows "Something went wrong ..." in case of a network error', () => {
     cy.intercept(
       'GET',
       '**/search**',
