@@ -25,7 +25,7 @@ describe('E2E', () => {
     }).as('getNextStories')
 
     cy.get('.item').should('have.length', 20)
-    cy.contains('More').click()
+    cy.contains('More').should('be.visible').click()
 
     cy.wait('@getNextStories')
     cy.get('.item').should('have.length', 40)
@@ -39,9 +39,14 @@ describe('E2E', () => {
         `**/search?query=${newTerm}&page=0`
     ).as('getNewTermStories')
 
-    cy.get('#search').type(`${newTerm}{enter}`)
+    cy.get('#search')
+      .should('be.visible')
+      .type(`${newTerm}{enter}`)
 
     cy.wait('@getNewTermStories')
+
+    cy.getLocalStorage('search')
+      .should('be.equal', newTerm)
 
     cy.get(`button:contains(${initialTerm})`)
       .should('be.visible')
@@ -49,10 +54,16 @@ describe('E2E', () => {
 
     cy.wait('@getStories')
 
-    cy.get('.item').should('have.length', 20)
+    cy.getLocalStorage('search')
+      .should('be.equal', initialTerm)
+
+    cy.get('.item')
+      .should('have.length', 20)
+
     cy.get('.item')
       .first()
       .should('contain', initialTerm)
+
     cy.get(`button:contains(${newTerm})`)
       .should('be.visible')
   })
@@ -104,6 +115,7 @@ describe('API Mocking', () => {
     it('shows one story less after dimissing the first story', () => {
       cy.get('.button-small')
         .first()
+        .should('be.visible')
         .click()
 
       cy.get('.item').should('have.length', 1)
@@ -126,6 +138,7 @@ describe('API Mocking', () => {
         .should('have.attr', 'href', smallMockedAnswer.hits[0].url)
 
       cy.get('@titleHeader')
+        .should('be.visible')
         .click()
 
       cy.get('.item')
@@ -148,6 +161,7 @@ describe('API Mocking', () => {
         .and('contain', smallMockedAnswer.hits[0].author)
 
       cy.get('@authorHeader')
+        .should('be.visible')
         .click()
 
       cy.get('.item')
@@ -168,6 +182,7 @@ describe('API Mocking', () => {
         .and('contain', smallMockedAnswer.hits[1].num_comments)
 
       cy.get('@commentsHeader')
+        .should('be.visible')
         .click()
 
       cy.get('.item')
@@ -188,6 +203,7 @@ describe('API Mocking', () => {
         .and('contain', smallMockedAnswer.hits[1].points)
 
       cy.get('@pointsHeader')
+        .should('be.visible')
         .click()
 
       cy.get('.item')
@@ -208,10 +224,13 @@ describe('API Mocking', () => {
       cy.visit('/')
       cy.wait('@getMockedAnswer')
 
-      cy.get('#search').clear()
+      cy.get('#search')
+        .should('be.visible')
+        .clear()
     })
     it('types and hits ENTER', () => {
       cy.get('#search')
+        .should('be.visible')
         .type(`${newTerm}{enter}`)
 
       cy.wait('@getNewTermMockedAnswer')
@@ -221,12 +240,17 @@ describe('API Mocking', () => {
         .contains(newTerm)
       cy.get(`button:contains(${initialTerm})`)
         .should('be.visible')
+
+      cy.getLocalStorage('search')
+        .should('be.equal', newTerm)
     })
 
     it('types and clicks the submit button', () => {
       cy.get('#search')
+        .should('be.visible')
         .type(newTerm)
       cy.contains('Submit')
+        .should('be.visible')
         .click()
 
       cy.wait('@getNewTermMockedAnswer')
@@ -236,6 +260,9 @@ describe('API Mocking', () => {
         .contains(newTerm)
       cy.get(`button:contains(${initialTerm})`)
         .should('be.visible')
+
+      cy.getLocalStorage('search')
+        .should('be.equal', newTerm)
     })
 
     it('shows a max of 5 buttons for the last searched terms', () => {
@@ -248,15 +275,24 @@ describe('API Mocking', () => {
       ).as('getRandomStories')
 
       Cypress._.times(6, () => {
+        const randomWord = faker.random.word()
         cy.get('#search')
+          .should('be.visible')
           .clear()
-          .type(`${faker.random.word()}{enter}`)
+          .type(`${randomWord}{enter}`)
+
+        cy.getLocalStorage('search')
+          .should('be.equal', randomWord)
       })
 
       cy.wait('@getRandomStories')
 
-      cy.get('.last-searches button')
-        .should('have.length', 5)
+      cy.get('.last-searches')
+      .within(() => {
+          expect('have.length', 5)
+          cy.get('button')
+            .should('be.visible')
+        })
     })
 
     it('shows no story when none is returned', () => {
