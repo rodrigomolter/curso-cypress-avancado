@@ -32,17 +32,12 @@ describe('E2E', () => {
   })
 
   it('searches via the last searched term', () => {
-    cy.get('#search').clear()
-
     cy.intercept(
       'GET',
         `**/search?query=${newTerm}&page=0`
     ).as('getNewTermStories')
 
-    cy.get('#search')
-      .should('be.visible')
-      .type(`${newTerm}{enter}`)
-
+    cy.search(newTerm)
     cy.wait('@getNewTermStories')
 
     cy.getLocalStorage('search')
@@ -229,13 +224,12 @@ describe('API Mocking', () => {
         .clear()
     })
     it('types and hits ENTER', () => {
-      cy.get('#search')
-        .should('be.visible')
-        .type(`${newTerm}{enter}`)
+      cy.search(newTerm)
 
       cy.wait('@getNewTermMockedAnswer')
 
-      cy.get('.item').should('have.length', 20)
+      cy.get('.item')
+        .should('have.length', 20)
       cy.get('.item')
         .contains(newTerm)
       cy.get(`button:contains(${initialTerm})`)
@@ -276,10 +270,7 @@ describe('API Mocking', () => {
 
       Cypress._.times(6, () => {
         const randomWord = faker.random.word()
-        cy.get('#search')
-          .should('be.visible')
-          .clear()
-          .type(`${randomWord}{enter}`)
+        cy.search(randomWord)
 
         cy.getLocalStorage('search')
           .should('be.equal', randomWord)
