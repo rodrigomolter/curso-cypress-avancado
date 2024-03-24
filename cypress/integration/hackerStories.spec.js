@@ -288,8 +288,7 @@ describe('API Mocking', () => {
       cy.wait('@getRandomStories')
 
       cy.get('.last-searches')
-      .within(() => {
-          expect('have.length', 5)
+        .within(() => {
           cy.get('button')
             .should('be.visible')
         })
@@ -334,5 +333,22 @@ describe('Errors', () => {
 
     cy.get('p:contains(Something went wrong ...)')
       .should('be.visible')
+  })
+
+  it('shows a "Loading ..." state before showing the results', () => {
+    cy.intercept(
+      'GET',
+      '**/search**',
+      {
+        delay: 2000,
+        fixture: 'mockedInitialTerm'
+      }
+    ).as('getDelayedRequest')
+
+    cy.visit('/')
+    cy.assertLoadingIsShownAndHidden()
+    cy.wait('@getDelayedRequest')
+
+    cy.get('.item').should('have.length', 15)
   })
 })
