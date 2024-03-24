@@ -1,31 +1,34 @@
-# Testes Automatizados com Cypress - Avançado
+# Cypress Avançado - Hacker Ners
 
-👋 Seja bem vindo(a)!
+Sample project for the advanced course of the Talking About Testing online school.
+It a set of test cases written in `cypress` to test the aplication under the link 
+` https://wlsf82-hacker-stories.web.app`
 
-É muito bom tê-lo(a) aqui. Tenho certeza que você vai adorar este curso. ❤️
+## Pre-requirements 📋
 
-## O que você vai aprender
+It is required to have Node.js installed to run this project.
 
-Durante o curso avançado de Cypress, você vai aprender:
+> I used versions `v18.17.1` of Node.js. I suggest you use the same or later versions.
 
-- Como criar testes 100% _flakiness-free_
-- Como interagir com a aplicação o mais próximo de como um usuário real faria
-  - Como esperar por um elemento estar visível antes de interagir com ele
-  - Como simular o uso do teclado em vez de clique em botão em funcionalidades de busca
-  - Como esperar por requisições HTTP antes de seguir em frente com os testes
-- Como organizar diferentes testes em seus específicos contextos
-- Como ler o `localStorage` do navegador
-- Como tornar seletores de elementos mais específicos
-- Como simplificar comandos repetitivos
-- Como interceptar e mockar uma API externa para testar o frontend independente do backend
-- Como simular erros no servidor e na rede
-- Como simular lentidão na chamada à uma API
-- Como modificar o relatório de testes padrão para um que combine com o seu estilo 😉
+## Installation 🔧
 
-## Vamos começar?
+Run `npm install` (or `npm i` for the short version) to install the dev dependencies.
 
-Vá para a seção de [pré-requisitos](./lessons/0.md).
+## Tests ✔️
+
+You can run the tests simulating a desktop viewport.
+
+### Desktop 💻
+
+Run `npm test` (or `npm t` for the short version) to run the test in headless mode on a desktop viewport.
+
+Or, run `npm run cy:open` to open Cypress in interactive mode on a desktop viewport.
+
+
+## Support this project 🙌
+
+If you want to support this project, leave a ⭐.
 
 ___
 
-Um curso da [**Escola Talking About Testing**](https://udemy.com/user/walmyr).
+This project was developed during the [Talking About Testing course](https://github.com/wlsf82/cypress-basico-v2/tree/main).
