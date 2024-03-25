@@ -1,3 +1,4 @@
+const { hits } = require('../fixtures/smallMockedAnswer')
 const initialTerm = 'React'
 const newTerm = 'Node'
 describe('E2E', () => {
@@ -84,27 +85,24 @@ describe('API Mocking', () => {
     })
 
     it('shows the right data for all rendered stories', () => {
-      const smallMockedAnswer = require('../fixtures/smallMockedAnswer')
 
       cy.get('.item')
-        .first()
+        .as('tableRows')
         .should('be.visible')
-        .and('contain', smallMockedAnswer.hits[0].title)
-        .and('contain', smallMockedAnswer.hits[0].author)
-        .and('contain', smallMockedAnswer.hits[0].num_comments)
-        .and('contain', smallMockedAnswer.hits[0].points)
-      cy.get(`.item a:contains(${smallMockedAnswer.hits[0].title})`)
-        .should('have.attr', 'href', smallMockedAnswer.hits[0].url)
+        .and('have.length', hits.length)
+      
+      hits.forEach((hit, index) => {
+        cy.get('@tableRows')
+          .eq(index)
+          .should('contain', hit.title)
+          .and('contain', hit.title)
+          .and('contain', hit.author)
+          .and('contain', hit.num_comments)
+          .and('contain', hit.points)
 
-      cy.get('.item')
-        .last()
-        .should('be.visible')
-        .and('contain', smallMockedAnswer.hits[1].title)
-        .and('contain', smallMockedAnswer.hits[1].author)
-        .and('contain', smallMockedAnswer.hits[1].num_comments)
-        .and('contain', smallMockedAnswer.hits[1].points)
-      cy.get(`.item a:contains(${smallMockedAnswer.hits[1].title})`)
-        .should('have.attr', 'href', smallMockedAnswer.hits[1].url)
+        cy.get(`.item a:contains(${hit.title})`)
+          .should('have.attr', 'href', hit.url)
+      })
     })
 
     it('shows one story less after dimissing the first story', () => {
@@ -113,12 +111,11 @@ describe('API Mocking', () => {
         .should('be.visible')
         .click()
 
-      cy.get('.item').should('have.length', 1)
+      cy.get('.item').should('have.length', hits.length-1)
     })
   })
 
   context('Order by', () => {
-    const smallMockedAnswer = require('../fixtures/smallMockedAnswer')
     it('orders by title', () => {
       cy.get('.list-header-button:contains(Title)')
         .as('titleHeader')
@@ -128,9 +125,9 @@ describe('API Mocking', () => {
       cy.get('.item')
         .first()
         .should('be.visible')
-        .and('contain', smallMockedAnswer.hits[0].title)
-      cy.get(`.item a:contains(${smallMockedAnswer.hits[0].title})`)
-        .should('have.attr', 'href', smallMockedAnswer.hits[0].url)
+        .and('contain', hits[0].title)
+      cy.get(`.item a:contains(${hits[0].title})`)
+        .should('have.attr', 'href', hits[0].url)
 
       cy.get('@titleHeader')
         .should('be.visible')
@@ -139,9 +136,9 @@ describe('API Mocking', () => {
       cy.get('.item')
         .first()
         .should('be.visible')
-        .and('contain', smallMockedAnswer.hits[1].title)
-      cy.get(`.item a:contains(${smallMockedAnswer.hits[1].title})`)
-        .should('have.attr', 'href', smallMockedAnswer.hits[1].url)
+        .and('contain', hits[1].title)
+      cy.get(`.item a:contains(${hits[1].title})`)
+        .should('have.attr', 'href', hits[1].url)
     })
 
     it('orders by author', () => {
@@ -153,7 +150,7 @@ describe('API Mocking', () => {
       cy.get('.item')
         .first()
         .should('be.visible')
-        .and('contain', smallMockedAnswer.hits[0].author)
+        .and('contain', hits[0].author)
 
       cy.get('@authorHeader')
         .should('be.visible')
@@ -162,7 +159,7 @@ describe('API Mocking', () => {
       cy.get('.item')
         .first()
         .should('be.visible')
-        .and('contain', smallMockedAnswer.hits[1].author)
+        .and('contain', hits[1].author)
     })
 
     it('orders by comments', () => {
@@ -174,7 +171,7 @@ describe('API Mocking', () => {
       cy.get('.item')
         .first()
         .should('be.visible')
-        .and('contain', smallMockedAnswer.hits[1].num_comments)
+        .and('contain', hits[1].num_comments)
 
       cy.get('@commentsHeader')
         .should('be.visible')
@@ -183,7 +180,7 @@ describe('API Mocking', () => {
       cy.get('.item')
         .first()
         .should('be.visible')
-        .and('contain', smallMockedAnswer.hits[0].num_comments)
+        .and('contain', hits[0].num_comments)
     })
 
     it('orders by points', () => {
@@ -195,7 +192,7 @@ describe('API Mocking', () => {
       cy.get('.item')
         .first()
         .should('be.visible')
-        .and('contain', smallMockedAnswer.hits[1].points)
+        .and('contain', hits[1].points)
 
       cy.get('@pointsHeader')
         .should('be.visible')
@@ -204,7 +201,7 @@ describe('API Mocking', () => {
       cy.get('.item')
         .first()
         .should('be.visible')
-        .and('contain', smallMockedAnswer.hits[0].points)
+        .and('contain', hits[0].points)
     })
   })
 
